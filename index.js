@@ -10,7 +10,8 @@ const doc = new PDFDocument;
 // See below for browser usage
 doc.pipe(fs.createWriteStream('output.pdf'));
 
-const docWidth = 612;
+const docWidth = 72 * 8.5;
+const docHeight = 72 * 12;
 const marginHorizontal = 40;
 const docWidthWithMargin = docWidth - marginHorizontal
 const marginVertical = 40;
@@ -175,7 +176,7 @@ doc
 // Signatures
 // 
 
-const signaturesStartHeight = 600
+const signaturesStartHeight = 550
 const signaturesLineWeight = 0.8
 
 // First column
@@ -204,7 +205,7 @@ doc
 // Third line
 doc // Line
   .moveTo(signaturesFirstColumnStartPosition, signaturesStartHeight + 100)                               // set the current point
-  .lineTo((docWidth / 3 - marginHorizontal / 3)/2, signaturesStartHeight + 100)
+  .lineTo(signaturesFirstColumnStartPosition + docWidthWithMargin / 8, signaturesStartHeight + 100)
   .lineWidth(signaturesLineWeight)
   .stroke()
 doc
@@ -213,7 +214,7 @@ doc
 
 doc // Line
   .moveTo(signaturesFirstColumnStartPosition + 90, signaturesStartHeight + 100)                               // set the current point
-  .lineTo(docWidth / 3 - marginHorizontal / 3, signaturesStartHeight + 100)
+  .lineTo(signaturesFirstColumnEndPosition, signaturesStartHeight + 100)
   .lineWidth(signaturesLineWeight)
   .stroke()
 doc
@@ -231,7 +232,7 @@ doc // Line
   .stroke()
 doc
   .fontSize(fz[4])
-  .text('Shipper Signature', signaturesSecondColumnStartPosition, signaturesStartHeight + 8)
+  .text('Carrier Signature', signaturesSecondColumnStartPosition, signaturesStartHeight + 8)
 
 // Second line
 doc // Line
@@ -254,7 +255,7 @@ doc // Line
   .stroke()
 doc
   .fontSize(fz[4])
-  .text('Shipper Signature', signaturesThirdColumnStartPosition, signaturesStartHeight + 8)
+  .text('Consignee Signature', signaturesThirdColumnStartPosition, signaturesStartHeight + 8)
 
 // Second line
 doc // Line
@@ -265,6 +266,57 @@ doc // Line
 doc
   .fontSize(fz[4])
   .text('Date', signaturesThirdColumnStartPosition, signaturesStartHeight + 58)
+
+// Third line
+doc // Line
+  .moveTo(signaturesThirdColumnStartPosition, signaturesStartHeight + 100)                               // set the current point
+  .lineTo(signaturesThirdColumnStartPosition + docWidthWithMargin/8, signaturesStartHeight + 100)
+  .lineWidth(signaturesLineWeight)
+  .stroke()
+doc
+  .fontSize(fz[4])
+  .text('Time in', signaturesThirdColumnStartPosition, signaturesStartHeight + 108)
+
+doc // Line
+  .moveTo(signaturesThirdColumnStartPosition + 90, signaturesStartHeight + 100)                               // set the current point
+  .lineTo(docWidthWithMargin, signaturesStartHeight + 100)
+  .lineWidth(signaturesLineWeight)
+  .stroke()
+doc
+  .fontSize(fz[4])
+  .text('Time out', signaturesThirdColumnStartPosition + 90, signaturesStartHeight + 108)
+
+// END Signatures
+
+// 
+// Logo
+// 
+
+const logoStartHeight = docHeight - 160;
+
+doc
+  .text('Arranged by', marginHorizontal, logoStartHeight)
+  .image('logo.png', marginHorizontal, logoStartHeight + 15, {
+    scale: 0.2
+  })
+
+// Sign up with Uber Freight at t.uber.com/shipper-signup
+// Left Header
+doc
+  .fontSize(fz[3])
+  .text('Sign up with Uber Freight at ', 330, logoStartHeight + 18, {
+    width: 450,
+    height: 20,
+    continued: true
+  })
+  .fillColor('blue')
+  .text('t.uber.com/shipper-signup', {
+    link: 't.uber.com/shipper-signup',
+    underline: true
+  })
+// END Logo
+
+
 
 
 
