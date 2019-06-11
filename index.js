@@ -10,6 +10,20 @@ const doc = new PDFDocument;
 // See below for browser usage
 doc.pipe(fs.createWriteStream('output.pdf'));
 
+
+// 
+// Fonts
+// 
+
+doc.registerFont('Headline', 'fonts/UberMove-Medium.ttf');
+doc.registerFont('Text', 'fonts/UberMoveText-Regular.ttf');
+doc.registerFont('Text-Bold', 'fonts/UberMoveText-Medium.ttf');
+
+
+
+// 
+// Variables
+// 
 const docWidth = 72 * 8.5;
 const docHeight = 72 * 12;
 const marginHorizontal = 40;
@@ -21,20 +35,22 @@ const fz = [24, 16, 14, 10, 8]
 // Right Header
 doc
   .fontSize(fz[0])
+  .font('Headline')
   .text('Bill of Lading', marginHorizontal, marginVertical)
   .fontSize(fz[1])
   .text('Premier Packaging Inc', marginHorizontal, marginVertical + 30)
 
 // Left Header
 doc  
+  .font('Text')
   .fontSize(fz[3])
-  .text('Page 1 of 1', docWidth - 150, marginVertical, {
+  .text('Page 1 of 1', docWidth - 140, marginVertical, {
     align: 'right',
     width: 100
   })
 doc
   .fontSize(fz[4])
-  .text('All pages must be signed', docWidth - 150, marginVertical + 15, {
+  .text('All pages must be signed', docWidth - 140, marginVertical + 15, {
     align: 'right',
     width: 100
   })
@@ -47,15 +63,40 @@ const shipmentInfoStartHeight = 115
 // Left column
 doc
   .fontSize(fz[3])
-  .text('Document Date: 2019–04–24', marginHorizontal, shipmentInfoStartHeight)
-  .text('UF Reference #: UF–18291023', marginHorizontal, shipmentInfoStartHeight + 20)
-  .text('PO #: 182937', marginHorizontal, shipmentInfoStartHeight + 40)
+  .font('Text-Bold')
+  .text('Document Date: ', marginHorizontal, shipmentInfoStartHeight, {continued: true})
+  .font('Text')
+  .text('2019–04–24')
+
+  .font('Text-Bold')
+  .text('UF Reference #: ', marginHorizontal, shipmentInfoStartHeight + 20, { continued: true })
+  .font('Text')
+  .text('UF–18291023')
+
+  .font('Text-Bold')
+  .text('PO #: ', marginHorizontal, shipmentInfoStartHeight + 40, { continued: true })
+  .font('Text')
+  .text('182937')
+
 // Right column
+
 doc
   .fontSize(fz[3])
-  .text('Carrier: Heavy Hauling Carrier Co', docWidth / 2, shipmentInfoStartHeight)
-  .text('Driver: Dale Johnson', docWidth / 2, shipmentInfoStartHeight + 20)
-  .text('Equipment Type: Dry Van', docWidth / 2, shipmentInfoStartHeight + 40)
+  .font('Text-Bold')
+  .text('Carrier: ', docWidth / 2, shipmentInfoStartHeight, { continued: true })
+  .font('Text')
+  .text('Heavy Hauling Carrier Co')
+
+  .font('Text-Bold')
+  .text('Driver: ', docWidth / 2, shipmentInfoStartHeight + 20, { continued: true })
+  .font('Text')
+  .text('Dale Johnson')
+
+  .font('Text-Bold')
+  .text('Equipment Type: ', docWidth / 2, shipmentInfoStartHeight + 40, { continued: true })
+  .font('Text')
+  .text('Dry Van')
+
 // END Shipment information
 
 // 
@@ -65,6 +106,7 @@ const infoColumnsStartHeight = 200;
 // Left column
 doc
   .fontSize(fz[2])
+  .font('Headline')
   .text('Pickup', marginHorizontal, infoColumnsStartHeight)
 doc // Line
   .moveTo(marginHorizontal, infoColumnsStartHeight + 18)                               // set the current point
@@ -74,7 +116,9 @@ doc // Line
 // Subcolumn Left
 doc
   .fontSize(fz[3])
-  .text('Address:', marginHorizontal, infoColumnsStartHeight + 40)  
+  .font('Text-Bold')
+  .text('Address', marginHorizontal, infoColumnsStartHeight + 40)  
+  .font('Text')
   .moveDown(0.5)
   .text('410 Chestnut st')
   .moveDown(0.5)
@@ -85,13 +129,17 @@ doc
 // Subcolumn Right
 doc
   .fontSize(fz[3])
-  .text('Time:', marginHorizontal + 130, infoColumnsStartHeight + 40)
+  .font('Text-Bold')
+  .text('Time', marginHorizontal + 130, infoColumnsStartHeight + 40)
+  .font('Text')
   .moveDown(0.5)
   .text('Nov 12, 2019')
   .moveDown(0.5)
   .text('8:30AM CST')
   .moveDown(1.5)
+  .font('Text-Bold')
   .text('Pickup #')
+  .font('Text')
   .moveDown(0.5)
   .text('43299211')
 
@@ -99,6 +147,7 @@ doc
 // Right column
 doc
   .fontSize(fz[2])
+  .font('Headline')
   .text('Dropoff', docWidth / 2, infoColumnsStartHeight)
 doc // Line
   .moveTo(docWidth / 2, infoColumnsStartHeight + 18)                               // set the current point
@@ -108,7 +157,9 @@ doc // Line
 // Subcolumn Left
 doc
   .fontSize(fz[3])
-  .text('Address:', docWidth / 2, infoColumnsStartHeight + 40)
+  .font('Text-Bold')
+  .text('Address', docWidth / 2, infoColumnsStartHeight + 40)
+  .font('Text')
   .moveDown(0.5)
   .text('410 Chestnut st')
   .moveDown(0.5)
@@ -119,13 +170,17 @@ doc
 // Subcolumn Right
 doc
   .fontSize(fz[3])
-  .text('Time:', docWidth / 2 + 130, infoColumnsStartHeight + 40)
+  .font('Text-Bold')
+  .text('Time', docWidth / 2 + 130, infoColumnsStartHeight + 40)
+  .font('Text')
   .moveDown(0.5)
   .text('Nov 12, 2019')
   .moveDown(0.5)
   .text('8:30AM CST')
   .moveDown(1.5)
+  .font('Text-Bold')
   .text('Dropoff #')
+  .font('Text')
   .moveDown(0.5)
   .text('43299211')
 
@@ -138,6 +193,7 @@ const customerOrderStartHeight = 380
 
 doc
   .fontSize(fz[2])
+  .font('Headline')
   .text('Customer order', marginHorizontal, customerOrderStartHeight)
 doc // Line
   .moveTo(marginHorizontal, customerOrderStartHeight + 18)                               // set the current point
@@ -147,26 +203,34 @@ doc // Line
 // First column
 doc
   .fontSize(fz[3])
-  .text('Quantity:', marginHorizontal, customerOrderStartHeight + 40)
+  .font('Text-Bold')
+  .text('Quantity', marginHorizontal, customerOrderStartHeight + 40)
+  .font('Text')
   .moveDown(0.5)
   .text('20')
 // Second column
 doc
   .fontSize(fz[3])
-  .text('Packaging:', marginHorizontal + 130, customerOrderStartHeight + 40)
+  .font('Text-Bold')
+  .text('Packaging', marginHorizontal + 130, customerOrderStartHeight + 40)
+  .font('Text')
   .moveDown(0.5)
   .text('Pallets')
 // Third column
 doc
   .fontSize(fz[3])
-  .text('Address:', docWidth / 2, customerOrderStartHeight + 40)
+  .font('Text-Bold')
+  .text('Address', docWidth / 2, customerOrderStartHeight + 40)
+  .font('Text')
   .moveDown(0.5)
   .text('Pallets')
 
 // Fourth column
 doc
   .fontSize(fz[3])
-  .text('Time:', docWidth / 2 + 130, customerOrderStartHeight + 40)
+  .font('Text-Bold')
+  .text('Time', docWidth / 2 + 130, customerOrderStartHeight + 40)
+  .font('Text')
   .moveDown(0.5)
   .text('Pallets')
 
@@ -190,6 +254,7 @@ doc // Line
   .stroke()
 doc
   .fontSize(fz[4])
+  .font('Text-Bold')
   .text('Shipper Signature', signaturesFirstColumnStartPosition, signaturesStartHeight + 8)
 
 // Second line
@@ -295,6 +360,7 @@ doc
 const logoStartHeight = docHeight - 160;
 
 doc
+  .font('Text')
   .text('Arranged by', marginHorizontal, logoStartHeight)
   .image('logo.png', marginHorizontal, logoStartHeight + 15, {
     scale: 0.2
@@ -304,7 +370,7 @@ doc
 // Left Header
 doc
   .fontSize(fz[3])
-  .text('Sign up with Uber Freight at ', 330, logoStartHeight + 18, {
+  .text('Sign up with Uber Freight at ', 314, logoStartHeight + 18, {
     width: 450,
     height: 20,
     continued: true
