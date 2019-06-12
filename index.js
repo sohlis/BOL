@@ -220,19 +220,19 @@ doc
 doc
   .fontSize(fz[3])
   .font('Text-Bold')
-  .text('Address', docWidth / 2, customerOrderStartHeight + 40)
+  .text('Commodity', docWidth / 2, customerOrderStartHeight + 40)
   .font('Text')
   .moveDown(0.5)
-  .text('Pallets')
+  .text('Cheese Burgers')
 
 // Fourth column
 doc
   .fontSize(fz[3])
   .font('Text-Bold')
-  .text('Time', docWidth / 2 + 130, customerOrderStartHeight + 40)
+  .text('Weight', docWidth / 2 + 130, customerOrderStartHeight + 40)
   .font('Text')
   .moveDown(0.5)
-  .text('Pallets')
+  .text('44,000')
 
 // END Customer Order
 
